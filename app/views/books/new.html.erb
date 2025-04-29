@@ -1,0 +1,19 @@
+<% content_for :title, "New book" %>
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <div class="card shadow-sm mt-5">
+        <div class="card-body p-4">
+          <h1 class="text-center mb-4">New Book</h1>
+
+          <%= render "form", book: @book %>
+
+          <div class="text-center mt-4">
+            <%= link_to "Back to books", books_path, class: "btn btn-outline-secondary" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

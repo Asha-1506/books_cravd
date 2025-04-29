@@ -1,0 +1,106 @@
+<% if notice.present? %>
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <%= notice %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+<% end %>
+
+<div class="container-fluid px-4 py-5">
+  <nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><%= link_to "Books", books_path %></li>
+      <% if @book.category %>
+        <li class="breadcrumb-item"><%= link_to @book.category.name, books_path(category_id: @book.category.id) %></li>
+      <% end %>
+      <li class="breadcrumb-item active" aria-current="page"><%= @book.title %></li>
+    </ol>
+  </nav>
+
+  <div class="row g-5">
+    <div class="col-md-4 col-lg-3">
+      <div class="position-sticky" style="top: 2rem;">
+        <div class="card shadow-sm border-0 overflow-hidden">
+          <% if @book.cover.attached? %>
+            <%= image_tag @book.cover, class: "card-img-top", style: "height: 400px; object-fit: cover;" %>
+          <% else %>
+            <%= image_tag @book.cover_url, class: "card-img-top", style: "height: 400px; object-fit: cover;" %>
+          <% end %>
+          <div class="card-body">
+            <div class="d-grid gap-2">
+              <%= link_to edit_book_path(@book), class: "btn btn-primary" do %>
+                <i class="bi bi-pencil"></i> Edit Book
+              <% end %>
+              <%= button_to @book, method: :delete, class: "btn btn-outline-danger", 
+                  form: { data: { turbo_confirm: "Are you sure you want to delete '#{@book.title}'? This action cannot be undone." } } do %>
+                <i class="bi bi-trash"></i> Delete Book
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-8 col-lg-9">
+      <div class="mb-4">
+        <h1 class="display-4 mb-1"><%= @book.title %></h1>
+        <h3 class="text-muted mb-3">by <%= @book.author %></h3>
+        
+        <div class="d-flex gap-2 align-items-center mb-4">
+          <% if @book.category %>
+            <span class="badge bg-primary fs-6"><%= @book.category.name %></span>
+          <% end %>
+          <span class="badge bg-secondary fs-6"><%= @book.published_year %></span>
+          <% if @book.isbn.present? %>
+            <span class="badge bg-light text-dark fs-6 border">ISBN: <%= @book.isbn %></span>
+          <% end %>
+        </div>
+      </div>
+      
+      <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body">
+          <h4 class="card-title">Description</h4>
+          <p class="card-text lead"><%= @book.description %></p>
+        </div>
+      </div>
+
+      <div class="card shadow-sm border-0">
+        <div class="card-body">
+          <h4 class="card-title mb-4">Book Details</h4>
+          
+          <div class="row g-3">
+            <div class="col-md-6">
+              <div class="p-3 border rounded bg-light">
+                <div class="small text-muted">Published Year</div>
+                <div class="fs-5"><%= @book.published_year %></div>
+              </div>
+            </div>
+            
+            <div class="col-md-6">
+              <div class="p-3 border rounded bg-light">
+                <div class="small text-muted">Category</div>
+                <div class="fs-5"><%= @book.category&.name || 'Uncategorized' %></div>
+              </div>
+            </div>
+            
+            <% if @book.isbn.present? %>
+              <div class="col-md-6">
+                <div class="p-3 border rounded bg-light">
+                  <div class="small text-muted">ISBN</div>
+                  <div class="fs-5"><%= @book.isbn %></div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% content_for :head do %>
+  <style>
+    .badge.fs-6 {
+      font-size: 0.875rem !important;
+    }
+  </style>
+<% end %>

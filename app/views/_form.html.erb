@@ -1,0 +1,60 @@
+<%= form_with(model: book) do |form| %>
+  <% if book.errors.any? %>
+    <div class="alert alert-danger">
+      <h4 class="alert-heading"><%= pluralize(book.errors.count, "error") %> prohibited this book from being saved:</h4>
+      <ul class="mb-0">
+        <% book.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= hidden_field_tag :view_mode, params[:view_mode] %>
+
+  <div class="mb-3">
+    <%= form.label :title, class: "form-label" %>
+    <%= form.text_field :title, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :author, class: "form-label" %>
+    <%= form.text_field :author, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :description, class: "form-label" %>
+    <%= form.text_area :description, class: "form-control", rows: 4 %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :published_year, class: "form-label" %>
+    <%= form.number_field :published_year, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :isbn, "ISBN", class: "form-label" %>
+    <%= form.text_field :isbn, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :category_id, "Category", class: "form-label" %>
+    <%= form.collection_select :category_id, Category.all, :id, :name, 
+        { prompt: "Select a category" }, 
+        class: "form-select" %>
+  </div>
+
+  <div class="mb-4">
+    <%= form.label :cover, "Cover Image", class: "form-label" %>
+    <% if form.object.cover.attached? %>
+      <div class="mb-2">
+        <%= image_tag form.object.cover, class: "img-thumbnail", style: "max-height: 200px" %>
+      </div>
+    <% end %>
+    <%= form.file_field :cover, class: "form-control", accept: "image/*" %>
+  </div>
+
+  <div class="d-grid">
+    <%= form.submit class: "btn btn-primary btn-lg" %>
+  </div>
+<% end %>

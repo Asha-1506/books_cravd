@@ -1,0 +1,20 @@
+<% content_for :title, "Editing book" %>
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <div class="card shadow-sm mt-5">
+        <div class="card-body p-4">
+          <h1 class="text-center mb-4">Editing Book</h1>
+
+          <%= render "form", book: @book %>
+
+          <div class="text-center mt-4">
+            <%= link_to "Show this book", @book, class: "btn btn-outline-primary me-2" %>
+            <%= link_to "Back to books", books_path(view_mode: params[:view_mode]), class: "btn btn-outline-secondary" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
