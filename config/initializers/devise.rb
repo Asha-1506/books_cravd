@@ -263,7 +263,7 @@ Devise.setup do |config|
   # should add them to the navigational formats lists.
   #
   # The "*/*" below is required to match Internet Explorer requests.
-  # config.navigational_formats = ['*/*', :html, :turbo_stream]
+  config.navigational_formats = ['*/*', :html, :turbo_stream]
 
   # The default HTTP method used to sign out a resource. Default is :delete.
   config.sign_out_via = :delete
@@ -298,10 +298,8 @@ Devise.setup do |config|
 
   # ==> Hotwire/Turbo configuration
   # When using Devise with Hotwire/Turbo, the http status for error responses
-  # and some redirects must match the following. The default in Devise for existing
-  # apps is `200 OK` and `302 Found` respectively, but new apps are generated with
-  # these new defaults that match Hotwire/Turbo behavior.
-  # Note: These might become the new default in future versions of Devise.
+  # and some redirects must match the following.
+  config.navigational_formats = ['*/*', :html, :turbo_stream]
   config.responder.error_status = :unprocessable_entity
   config.responder.redirect_status = :see_other
 
