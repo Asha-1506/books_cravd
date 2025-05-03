@@ -55,10 +55,10 @@
             <i class="bi bi-sort-alpha-down"></i> Sort by
           </button>
           <ul class="dropdown-menu">
-            <li><%= sort_link 'title', 'Title', class: 'dropdown-item' %></li>
-            <li><%= sort_link 'author', 'Author', class: 'dropdown-item' %></li>
-            <li><%= sort_link 'year', 'Year', class: 'dropdown-item' %></li>
-            <li><%= sort_link 'category', 'Category', class: 'dropdown-item' %></li>
+            <li><%= link_to "Title #{sort_indicator('title')}", books_path(sort: 'title', direction: next_sort_direction('title')), class: 'dropdown-item' %></li>
+            <li><%= link_to "Author #{sort_indicator('author')}", books_path(sort: 'author', direction: next_sort_direction('author')), class: 'dropdown-item' %></li>
+            <li><%= link_to "Year #{sort_indicator('published_year')}", books_path(sort: 'published_year', direction: next_sort_direction('published_year')), class: 'dropdown-item' %></li>
+            <li><%= link_to "Category #{sort_indicator('category')}", books_path(sort: 'category_id', direction: next_sort_direction('category_id')), class: 'dropdown-item' %></li>
           </ul>
         </div>
         <%= link_to "#", 
@@ -91,8 +91,8 @@
                   <div class="card-body d-flex flex-column">
                     <h5 class="card-title text-truncate mb-2" title="<%= book.title %>"><%= book.title %></h5>
                     <p class="card-subtitle text-muted mb-2">
-                      By <%= book.author %>
-                      <% if params[:all] == 'true' && book.user != current_user %>
+                      <%= book.author %>
+                      <% if book.user != current_user %>
                         <br><small>(Added by <%= book.user.email %>)</small>
                       <% end %>
                     </p>
@@ -100,20 +100,20 @@
                     <div class="card-actions mt-auto">
                       <div class="d-flex justify-content-between align-items-center">
                         <small class="text-muted">
-                          <i class="bi bi-calendar3"></i> <%= book.published_year %>
+                          <%= book.published_year %>
                         </small>
-                        <div class="btn-group">
-                          <%= link_to book_path(book), class: "btn btn-sm btn-outline-primary" do %>
+                        <div class="btn-group btn-group-sm">
+                          <%= link_to book, class: "btn btn-outline-primary" do %>
                             <i class="bi bi-eye"></i>
                           <% end %>
-                          <%= link_to edit_book_path(book), class: "btn btn-sm btn-outline-secondary" do %>
-                            <i class="bi bi-pencil"></i>
-                          <% end %>
-                          <% if book.user == current_user %>
-                            <%= button_to book_path(book), 
+                          <% if admin_or_owner?(book) %>
+                            <%= link_to edit_book_path(book, view_mode: params[:view_mode]), class: "btn btn-outline-secondary" do %>
+                              <i class="bi bi-pencil"></i>
+                            <% end %>
+                            <%= button_to book_path(book, view_mode: params[:view_mode]), 
                                 method: :delete, 
-                                class: "btn btn-sm btn-outline-danger",
-                                data: { confirm: "Are you sure you want to delete this book?" } do %>
+                                class: "btn btn-outline-danger", 
+                                form: { data: { turbo_confirm: "Are you sure?" } } do %>
                               <i class="bi bi-trash"></i>
                             <% end %>
                           <% end %>
@@ -137,29 +137,29 @@
         <table class="table table-hover align-middle">
           <thead>
             <tr>
-              <th style="width: 100px">Cover</th>
-              <th><%= sort_link 'title' %></th>
-              <th><%= sort_link 'author' %></th>
-              <th><%= sort_link 'category' %></th>
-              <th><%= sort_link 'year' %></th>
+              <th>Cover</th>
+              <th>Title</th>
+              <th>Author</th>
+              <th>Category</th>
+              <th>Year</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             <% @books.each do |book| %>
               <tr>
-                <td>
-                  <div class="book-cover-small">
-                    <% if book.cover.attached? %>
-                      <%= image_tag book.cover, class: "img-thumbnail", style: "width: 80px; height: 120px; object-fit: cover;" %>
-                    <% else %>
-                      <%= image_tag book.cover_url, class: "img-thumbnail", style: "width: 80px; height: 120px; object-fit: cover;" %>
-                    <% end %>
+                <td style="width: 100px">
+                  <div class="img-thumbnail" style="width: 80px; height: 120px; overflow: hidden;">
+                    <%= image_tag (book.cover.attached? ? book.cover : book.cover_url), 
+                        style: "width: 100%; height: 100%; object-fit: contain;",
+                        alt: book.title %>
                   </div>
                 </td>
                 <td>
-                  <h5 class="book-title-table mb-1"><%= book.title %></h5>
-                  <p class="book-description-table text-muted mb-0"><%= truncate(book.description, length: 60) %></p>
+                  <%= book.title %>
+                  <% if book.user != current_user %>
+                    <br><small class="text-muted">(Added by <%= book.user.email %>)</small>
+                  <% end %>
                 </td>
                 <td><%= book.author %></td>
                 <td>
@@ -175,20 +175,16 @@
                     <%= link_to book, class: "btn btn-outline-primary" do %>
                       <i class="bi bi-eye"></i>
                     <% end %>
-                    <%= link_to edit_book_path(book, view_mode: params[:view_mode]), class: "btn btn-outline-secondary" do %>
-                      <i class="bi bi-pencil"></i>
-                    <% end %>
-                    <% if book.user == current_user %>
+                    <% if admin_or_owner?(book) %>
+                      <%= link_to edit_book_path(book, view_mode: params[:view_mode]), class: "btn btn-outline-secondary" do %>
+                        <i class="bi bi-pencil"></i>
+                      <% end %>
                       <%= button_to book_path(book, view_mode: params[:view_mode]), 
                           method: :delete, 
                           class: "btn btn-outline-danger", 
-                          form: { data: { turbo_confirm: "You are not authorized to delete this book" } } do %>
+                          form: { data: { turbo_confirm: "Are you sure?" } } do %>
                         <i class="bi bi-trash"></i>
                       <% end %>
-                    <% else %>
-                      <button class="btn btn-outline-danger" disabled>
-                        <i class="bi bi-trash"></i>
-                      </button>
                     <% end %>
                   </div>
                 </td>
@@ -247,8 +243,10 @@
     .book-card .card-img-top {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
+      object-position: center;
       transition: transform 0.3s ease;
+      max-height: 100%;
     }
     .book-card:hover .card-img-top {
       transform: scale(1.05);

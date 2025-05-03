@@ -50,7 +50,18 @@ export default class extends Controller {
 
   updateURL(viewMode) {
     const url = new URL(window.location)
-    url.searchParams.set('view_mode', viewMode)
-    window.history.pushState({}, '', url)
+    const params = new URLSearchParams(url.search)
+    params.set('view_mode', viewMode)
+    
+    // Preserve all other parameters
+    const preserveParams = ['sort', 'direction', 'category_id', 'all']
+    preserveParams.forEach(param => {
+      const value = params.get(param)
+      if (value) params.set(param, value)
+    })
+    
+    // Update URL and reload page to ensure proper state
+    url.search = params.toString()
+    window.location = url.toString()
   }
 }

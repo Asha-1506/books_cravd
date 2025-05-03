@@ -16,7 +16,7 @@ class BooksController < ApplicationController
              end
     
     @books = @books.by_category(@current_category.id) if @current_category
-    @books = @books.sorted(@sort_field, @sort_direction)
+    @books = @books.order("#{@sort_field} #{@sort_direction}")
   end
 
   # GET /books/1 or /books/1.json
@@ -42,7 +42,7 @@ class BooksController < ApplicationController
 
     respond_to do |format|
       if @book.save
-        format.html { redirect_to book_url(@book), notice: "Book was successfully created." }
+        format.html { redirect_to books_path(view_mode: params[:view_mode]), notice: "Book was successfully created." }
         format.json { render :show, status: :created, location: @book }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -54,7 +54,8 @@ class BooksController < ApplicationController
   # PATCH/PUT /books/1 or /books/1.json
   def update
     unless admin_or_owner?(@book)
-      return head :forbidden
+      flash[:alert] = "You are not authorized to edit this book"
+      redirect_to books_path(view_mode: params[:view_mode]) and return
     end
 
     respond_to do |format|
