@@ -12,34 +12,37 @@ Rails.application.configure do
   # Full error reports are disabled.
   config.consider_all_requests_local = false
 
-  # Turn on fragment caching in view templates.
-  config.action_controller.perform_caching = true
+  # Enable server timing
+  config.server_timing = true
 
-  # Cache assets for far-future expiry since they are all digest stamped.
-  config.public_file_server.headers = { "cache-control" => "public, max-age=#{1.year.to_i}" }
+  # Enable caching
+  config.action_controller.perform_caching = true
+  config.cache_store = :memory_store
+
+  # Ensures that a master key has been made available in ENV["RAILS_MASTER_KEY"]
+  config.require_master_key = true
+
+  # Disable serving static files from `public/`, relying on NGINX/Apache to do so instead
   config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.asset_host = "http://assets.example.com"
 
-  # Store uploaded files on the local file system (see config/storage.yml for options).
-  config.active_storage.service = :local
+  # Specifies the header that your server uses for sending files.
+  config.action_dispatch.x_sendfile_header = nil
 
-  # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  config.force_ssl = true
+  # Include generic and useful information about system operation, but avoid logging too much
+  # information to avoid inadvertent exposure of personally identifiable information (PII).
+  config.log_level = :info
 
-  # Log to STDOUT by default
-  config.logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
+  # Prepend all log lines with the following tags.
   config.log_tags = [ :request_id ]
-  config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info")
 
-  # Use memory cache store in production
-  config.cache_store = :memory_store
+  # Use a different logger for distributed setups.
+  config.logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
 
-  # Use a real queuing backend for Active Job (and separate queues per environment)
-  config.active_job.queue_adapter = :async
-
-  # Enable locale fallbacks for I18n
+  # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
+  # the I18n.default_locale when a translation cannot be found).
   config.i18n.fallbacks = true
 
   # Don't log any deprecations.
