@@ -2,16 +2,20 @@
 # exit on error
 set -o errexit
 
-export BUNDLE_DEPLOYMENT=false
-export BUNDLE_PATH=vendor/bundle
-export BUNDLE_WITHOUT="development:test"
+# Install specific Ruby version
+curl -sSL https://get.rvm.io | bash -s stable
+source /etc/profile.d/rvm.sh
+rvm install 3.2.2
+rvm use 3.2.2 --default
 
-# Install gems
-bundle check || bundle install
+# Install bundler
+gem install bundler -v 2.4.22
 
-# Clean and precompile assets
-RAILS_ENV=production bundle exec rake assets:clean
-RAILS_ENV=production bundle exec rake assets:precompile
+# Install dependencies
+bundle install
 
-# Set up database
-RAILS_ENV=production bundle exec rake db:migrate
+# Asset compilation
+bundle exec rake assets:precompile
+
+# Database setup
+bundle exec rake db:migrate
