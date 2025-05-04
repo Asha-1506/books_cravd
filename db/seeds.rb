@@ -129,14 +129,36 @@ books_data = [
   }
 ]
 
+# Create default admin user
+admin = User.where(email: 'admin@example.com').first_or_create!(
+  password: 'password',
+  password_confirmation: 'password',
+  admin: true
+)
+
+# Create or update asha's user account
+asha = User.where(email: 'asha.vasudeva@gmail.com').first_or_create!(
+  password: 'password',
+  password_confirmation: 'password',
+  admin: true  # Make asha an admin
+)
+
 # Clear existing books
 Book.destroy_all
 
 # Create new books
 books_data.each do |book_data|
-  book = Book.create!(book_data.except(:cover_url))
+  # Create for admin with original ISBN
+  book = admin.books.create!(book_data.except(:cover_url))
   attach_cover(book, book_data[:cover_url])
-  puts "Created book: #{book.title}"
+  puts "Created book: #{book.title} for #{admin.email}"
+  
+  # Create for asha with modified ISBN
+  modified_data = book_data.except(:cover_url)
+  modified_data[:isbn] = "A-" + modified_data[:isbn] # Make ISBN unique
+  book = asha.books.create!(modified_data)
+  attach_cover(book, book_data[:cover_url])
+  puts "Created book: #{book.title} for #{asha.email}"
 end
 
 puts "\nCreated #{Book.count} books!"

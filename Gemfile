@@ -34,7 +34,6 @@ gem "devise"
 gem "bootsnap", require: false
 
 # Asset compilation dependencies
-gem "sassc-rails"
 gem "terser"
 
 group :development, :test do
