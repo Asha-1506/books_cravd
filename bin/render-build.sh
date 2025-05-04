@@ -2,9 +2,16 @@
 # exit on error
 set -o errexit
 
-# Remove Gemfile.lock and install gems from scratch
-rm -f Gemfile.lock
-gem install bundler
+# Clear bundler environment
+unset BUNDLE_PATH
+unset BUNDLE_BIN
+
+# Install latest bundler
+gem update --system
+gem install bundler -v '2.4.22'
+
+# Install gems
+bundle config set --local without 'development test'
 bundle install
 
 # Clean and precompile assets
