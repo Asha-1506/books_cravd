@@ -3,13 +3,13 @@
 set -o errexit
 
 # Install dependencies
-bundle install
+RAILS_ENV=production bundle install --without development test
 
 # Clean assets
-bundle exec rake assets:clean
+RAILS_ENV=production bundle exec rake assets:clean
 
 # Precompile assets
-bundle exec rake assets:precompile
+RAILS_ENV=production bundle exec rake assets:precompile
 
 # Database setup - only run migrations, skip schema load
-bundle exec rake db:migrate 2>/dev/null || bundle exec rake db:setup
+RAILS_ENV=production bundle exec rake db:migrate 2>/dev/null || RAILS_ENV=production bundle exec rake db:setup
