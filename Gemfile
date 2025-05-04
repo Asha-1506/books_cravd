@@ -37,24 +37,22 @@ gem "bootsnap", require: false
 # Asset compilation dependencies
 gem "terser"
 
+# Production database
+gem "pg", group: :production
+
 group :development do
-  # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem "debug", platforms: %i[ mri windows ]
-  # Use sqlite3 as the database for Active Record in development
-  gem "sqlite3", ">= 2.1"
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
+  # Use sqlite3 as the database for Active Record in development
+  gem "sqlite3", ">= 2.1"
+  # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
+  gem "debug", platforms: %i[ mri windows ]
 end
 
 group :test do
-  # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem "debug", platforms: %i[ mri windows ]
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
-end
-
-group :production do
-  # Use postgres as the database in production
-  gem "pg"
+  # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
+  gem "debug", platforms: %i[ mri windows ]
 end

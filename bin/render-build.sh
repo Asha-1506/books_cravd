@@ -2,8 +2,12 @@
 # exit on error
 set -o errexit
 
+# Configure bundler
+bundle config set --local deployment 'false'
+bundle config set --local frozen 'false'
+
 # Install dependencies
-RAILS_ENV=production bundle install --without development test
+RAILS_ENV=production bundle install
 
 # Clean assets
 RAILS_ENV=production bundle exec rake assets:clean
