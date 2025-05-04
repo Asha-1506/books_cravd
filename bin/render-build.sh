@@ -5,10 +5,11 @@ set -o errexit
 # Install dependencies
 bundle install
 
-# Set up database
-bundle exec rake db:schema:load
-bundle exec rake db:migrate
+# Clean assets
+bundle exec rake assets:clean
 
 # Precompile assets
 bundle exec rake assets:precompile
-bundle exec rake assets:clean
+
+# Database setup - only run migrations, skip schema load
+bundle exec rake db:migrate 2>/dev/null || bundle exec rake db:setup

@@ -15,21 +15,11 @@ services:
         value: production
       - key: RAILS_LOG_TO_STDOUT
         value: true
+      - key: RAILS_SERVE_STATIC_FILES
+        value: true
     plan: free
-    region: singapore
-    branch: main
-    healthCheckPath: /
-    buildFilter:
-      paths:
-      - "**/*.rb"
-      - "**/*.erb"
-      - "**/*.js"
-      - "**/*.css"
-      - "Gemfile.lock"
-      - "config/**/*"
-      - "bin/*"
 
 databases:
   - name: books_cravd_db
-    ipAllowList: []
     plan: free
+    ipAllowList: []
