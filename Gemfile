@@ -2,7 +2,10 @@ source "https://rubygems.org"
 ruby "3.4.1"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 8.0.2"
+gem "rails", "~> 7.1.0"
+
+# Use postgresql as the database for Active Record
+gem "pg", "~> 1.1"
 
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
 gem "propshaft"
@@ -53,8 +56,4 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
-end
-
-group :production do
-  gem "pg"
 end
