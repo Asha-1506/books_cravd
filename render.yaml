@@ -16,11 +16,9 @@ services:
       - key: RAILS_SERVE_STATIC_FILES
         value: true
       - key: RUBY_VERSION
-        value: 3.4.1
+        value: 3.2.2
     plan: free
 
 databases:
   - name: books_cravd_db
-    databaseName: books_cravd_production
     plan: free
-    postgresMajorVersion: 15
