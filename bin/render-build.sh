@@ -14,4 +14,4 @@ RAILS_ENV=production bundle exec rake assets:precompile
 
 # Database setup
 echo "Setting up database..."
-RAILS_ENV=production bundle exec rake db:reset db:migrate
+RAILS_ENV=production bundle exec rake db:prepare
