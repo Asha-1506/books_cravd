@@ -2,11 +2,16 @@
 # exit on error
 set -o errexit
 
+echo "Starting build process..."
+
 # Install dependencies
+echo "Installing dependencies..."
 bundle install
 
 # Asset compilation
+echo "Compiling assets..."
 bundle exec rake assets:precompile
 
 # Database setup
-bundle exec rake db:prepare
+echo "Setting up database..."
+bundle exec rake db:create db:migrate
