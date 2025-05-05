@@ -2,7 +2,7 @@ source "https://rubygems.org"
 ruby "3.4.1"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 6.1.7"
+gem "rails", "~> 7.0.8"
 
 # Use postgresql as the database for Active Record
 gem "pg", "~> 1.5"
@@ -11,12 +11,12 @@ gem "pg", "~> 1.5"
 gem "propshaft", "~> 0.8"
 
 # Use the Puma web server [https://github.com/puma/puma]
-gem "puma", "~> 5.6"
+gem "puma", "~> 6.0"
 
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem "importmap-rails", "~> 1.2"
 
-# Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
+# Turbolinks makes navigating your web application faster
 gem "turbo-rails", "~> 1.5"
 
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
@@ -24,6 +24,9 @@ gem "stimulus-rails", "~> 1.3"
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder", "~> 2.11"
+
+# Use Active Model has_secure_password
+gem "bcrypt", "~> 3.1.7"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
@@ -45,7 +48,7 @@ gem "redis", "~> 5.0"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem "sqlite3", "~> 1.6"
+  gem "sqlite3", "~> 1.4"
   gem "debug", platforms: %i[ mri windows ]
 end
 
