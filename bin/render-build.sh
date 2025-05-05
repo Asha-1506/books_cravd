@@ -4,14 +4,19 @@ set -o errexit
 
 echo "Starting build process..."
 
+echo "RAILS_ENV: $RAILS_ENV"
+echo "DATABASE_URL: $DATABASE_URL"
+echo "RUBY_VERSION: $RUBY_VERSION"
+
 # Install dependencies
 echo "Installing dependencies..."
 bundle install
 
 # Asset compilation
 echo "Compiling assets..."
-RAILS_ENV=production bundle exec rake assets:precompile
+bundle exec rake assets:precompile
 
 # Database setup
 echo "Setting up database..."
-RAILS_ENV=production bundle exec rake db:prepare
+bundle exec rake db:migrate:status || bundle exec rake db:create
+bundle exec rake db:migrate

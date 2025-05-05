@@ -21,5 +21,6 @@ services:
 
 databases:
   - name: books_cravd_db
+    databaseName: books_cravd_production
     plan: free
-    ipAllowList: []
+    postgresMajorVersion: 15
