@@ -16,7 +16,7 @@ services:
       - key: RAILS_SERVE_STATIC_FILES
         value: true
       - key: RUBY_VERSION
-        value: 3.2.2
+        value: 3.4.1
     plan: free
 
 databases:
