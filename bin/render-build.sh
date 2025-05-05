@@ -14,4 +14,4 @@ bundle exec rake assets:precompile
 
 # Database setup
 echo "Setting up database..."
-bundle exec rake db:create db:migrate
+bundle exec rake db:schema:load || bundle exec rake db:setup || bundle exec rake db:migrate
