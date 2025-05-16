@@ -1,8 +1,8 @@
 source "https://rubygems.org"
-ruby "3.4.1"
+ruby "3.2.2"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 7.0.8"
+gem "rails", "~> 7.1.0"
 
 # Use postgresql as the database for Active Record
 gem "pg", "~> 1.5"
@@ -45,6 +45,12 @@ gem "terser"
 
 # Use Redis adapter to run Action Cable in production
 gem "redis", "~> 5.0"
+
+# Explicit logger dependency
+gem "logger", "~> 1.7"
+
+# Heroku integration
+gem "rails_12factor", group: :production
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
