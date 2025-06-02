@@ -14,7 +14,7 @@ gem "propshaft", "~> 0.8"
 gem "puma", "~> 6.0"
 
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
-gem "importmap-rails", "~> 1.2"
+gem "importmap-rails", "~> 2.1"
 
 # Turbolinks makes navigating your web application faster
 gem "turbo-rails", "~> 1.5"
