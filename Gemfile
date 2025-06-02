@@ -17,7 +17,7 @@ gem "puma", "~> 6.0"
 gem "importmap-rails", "~> 1.2"
 
 # Turbolinks makes navigating your web application faster
-gem "turbo-rails", "~> 1.5"
+gem "turbo-rails", "~> 2.0"
 
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
 gem "stimulus-rails", "~> 1.3"
