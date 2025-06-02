@@ -22,11 +22,8 @@ Rails.application.configure do
   # Ensures that a master key has been made available in ENV["RAILS_MASTER_KEY"]
   config.require_master_key = true
 
-  # Disable serving static files from `public/`, relying on NGINX/Apache to do so instead
+  # Enable serving static files from `public/`
   config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
-
-  # Enable serving of images, stylesheets, and JavaScripts from an asset server.
-  # config.asset_host = "http://assets.example.com"
 
   # Specifies the header that your server uses for sending files.
   config.action_dispatch.x_sendfile_header = nil
@@ -51,6 +48,6 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  # Enable DNS rebinding protection
-  config.hosts << ENV['RENDER_EXTERNAL_HOSTNAME'] if ENV['RENDER_EXTERNAL_HOSTNAME'].present?
+  # Store files on Amazon S3
+  config.active_storage.service = :amazon
 end
