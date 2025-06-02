@@ -12,8 +12,11 @@ class Book < ApplicationRecord
 
   scope :by_category, ->(category_id) { where(category_id: category_id) if category_id.present? }
 
-  def cover_url
-    return cover if cover.attached?
-    'https://placehold.co/200x300/lightgray/darkgray?text=No+Cover'
+  def display_cover
+    if cover.attached?
+      Rails.application.routes.url_helpers.rails_blob_path(cover, only_path: true)
+    else
+      ActionController::Base.helpers.asset_path('default_book_cover.jpg')
+    end
   end
 end
