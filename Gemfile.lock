@@ -246,9 +246,9 @@ GEM
     rake (13.2.1)
     rdoc (6.13.1)
       psych (>= 4.0.0)
-    redis (5.4.0)
+    redis (5.4.1)
       redis-client (>= 0.22.0)
-    redis-client (0.24.0)
+    redis-client (0.25.1)
       connection_pool
     regexp_parser (2.10.0)
     reline (0.6.1)
@@ -330,7 +330,7 @@ DEPENDENCIES
   puma (~> 6.0)
   rails (~> 7.1.0)
   rails_12factor
-  redis (~> 5.0)
+  redis (~> 5.4)
   selenium-webdriver
   sqlite3 (~> 1.4)
   stimulus-rails (~> 1.3)
