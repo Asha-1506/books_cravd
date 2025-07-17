@@ -44,7 +44,7 @@ gem "bootsnap", require: false
 gem "terser"
 
 # Use Redis adapter to run Action Cable in production
-gem "redis", "~> 5.0"
+gem "redis", "~> 5.4"
 
 # Explicit logger dependency
 gem "logger", "~> 1.7"
